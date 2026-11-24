@@ -1,0 +1,591 @@
+/* =========================================================
+   HISTORY (CURVED TRAIL + POLAROID) & CARDLESS CONTACT
+   ========================================================= */
+
+/* --- 1. SECTION HISTORY: WINDING SVG TRAIL --- */
+.hist-trail-wrap {
+  position: relative;
+  max-width: 780px;
+  margin: 0 auto 38px;
+  padding-inline: 12px;
+}
+
+.hist-trail-svg {
+  position: absolute;
+  top: 22px;
+  left: 8%;
+  width: 84%;
+  height: 54px;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.hist-trail-base {
+  fill: none;
+  stroke: rgba(92, 58, 33, 0.22);
+  stroke-width: 2;
+  stroke-dasharray: 5 6;
+}
+
+.hist-trail-active {
+  fill: none;
+  stroke: var(--caramel);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hist-nodes {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.hist-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 4px;
+  color: var(--ink);
+  transition: transform 0.25s ease;
+}
+
+/* Posisi naik-turun mengikuti lengkungan garis */
+.hist-node:nth-child(2),
+.hist-node:nth-child(4) {
+  transform: translateY(14px);
+}
+
+.hist-node-dot {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-cream);
+  border: 2px solid var(--line);
+  color: var(--brown-dark);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 8px 18px -10px rgba(44, 30, 22, 0.35);
+  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hist-node:hover .hist-node-dot {
+  border-color: var(--caramel);
+  transform: scale(1.08);
+}
+
+.hist-node.active .hist-node-dot {
+  background: var(--brown);
+  border-color: var(--brown);
+  color: #fff;
+  transform: scale(1.14);
+  box-shadow: 0 12px 24px -10px rgba(63, 38, 20, 0.65);
+}
+
+.hist-node-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--mut);
+  text-align: center;
+  line-height: 1.25;
+  transition: color 0.25s ease;
+}
+
+.hist-node.active .hist-node-label {
+  color: var(--brown-dark);
+}
+
+/* --- STAGE HISTORY: KOLASE POLAROID + TEKS TERBUKA (TANPA CARD) --- */
+.history-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+  align-items: center;
+  gap: clamp(30px, 5vw, 64px);
+  max-width: 1000px;
+  margin: 18px auto 0;
+}
+
+@keyframes polaroidSettle {
+  0% {
+    opacity: 0;
+    transform: translate3d(-14px, 12px, 0) rotate(-7deg) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(-3deg) scale(1);
+  }
+}
+
+@keyframes miniPolaroidPop {
+  0% {
+    opacity: 0;
+    transform: translate3d(12px, 14px, 0) rotate(12deg) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(6deg) scale(1);
+  }
+}
+
+.hist-collage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px 14px 28px;
+}
+
+/* Polaroid Utama */
+.hist-polaroid-main {
+  position: relative;
+  z-index: 2;
+  width: min(295px, 74vw);
+  background: #fffdf9;
+  padding: 11px 11px 38px;
+  border-radius: 6px;
+  border: 1px solid rgba(92, 58, 33, 0.14);
+  box-shadow: 0 24px 44px -22px rgba(34, 21, 14, 0.45);
+  transform: rotate(-3deg);
+  animation: polaroidSettle 0.48s cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hist-collage:hover .hist-polaroid-main {
+  transform: rotate(-1.2deg) translateY(-4px);
+}
+
+.hist-polaroid-img {
+  width: 100%;
+  aspect-ratio: 4 / 4.3;
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--bg-sand);
+}
+
+.hist-polaroid-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hist-polaroid-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 11px;
+  padding-inline: 4px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 16.5px;
+  font-weight: 700;
+  color: var(--brown-dark);
+}
+
+/* Polaroid Kecil Bertumpuk di Sudut Kanan Bawah */
+.hist-polaroid-mini {
+  position: absolute;
+  bottom: 4px;
+  right: max(4%, 8px);
+  z-index: 3;
+  width: 116px;
+  background: #fffdf9;
+  padding: 6px 6px 18px;
+  border-radius: 5px;
+  border: 1px solid rgba(92, 58, 33, 0.16);
+  box-shadow: 0 16px 30px -14px rgba(34, 21, 14, 0.45);
+  transform: rotate(6deg);
+  animation: miniPolaroidPop 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both;
+}
+
+.hist-polaroid-mini img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+/* Stempel Melingkar Berputar di Sudut Kiri Atas */
+.hist-roast-seal {
+  position: absolute;
+  top: 0;
+  left: max(4%, 8px);
+  z-index: 3;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  background: var(--bg-cream);
+  border: 1.5px dashed var(--caramel);
+  color: var(--brown-dark);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.25;
+  box-shadow: 0 10px 22px -12px rgba(44, 30, 22, 0.35);
+  animation: motifSpinSlow 28s linear infinite;
+}
+
+/* Kolom Kanan: Narasi Terbuka Tanpa Kotak Card */
+@keyframes histTextGlide {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.hist-open-editorial {
+  position: relative;
+  padding-block: 8px;
+  animation: histTextGlide 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.hist-bg-year {
+  position: absolute;
+  top: -26px;
+  right: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(86px, 12vw, 138px);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--brown);
+  opacity: 0.07;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hist-era-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--caramel);
+  margin-bottom: 10px;
+}
+
+.hist-era-line::before {
+  content: '';
+  width: 28px;
+  height: 1.5px;
+  background: var(--caramel);
+}
+
+.hist-open-editorial h3 {
+  position: relative;
+  font-size: clamp(28px, 3.5vw, 38px);
+  line-height: 1.14;
+  color: var(--brown-dark);
+  margin-bottom: 14px;
+}
+
+.hist-open-editorial p {
+  position: relative;
+  font-size: 15px;
+  line-height: 1.76;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+
+/* Kutipan Highlight Tanpa Kotak Penuh (Hanya Garis Samping) */
+.hist-highlight-quote {
+  padding: 6px 0 6px 16px;
+  border-left: 2.5px solid var(--caramel);
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--brown-dark);
+  margin-bottom: 24px;
+}
+
+.hist-open-controls {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hist-counter {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--mut);
+}
+
+/* --- 2. SECTION CONTACT: CARDLESS OPEN ATELIER (FORM SAJA) --- */
+.contact-open-wrap {
+  max-width: 680px;
+  margin-inline: auto;
+}
+
+.contact-direct-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px 18px;
+  margin-top: 14px;
+  font-size: 13px;
+  color: var(--mut);
+}
+
+.contact-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: var(--brown-dark);
+  border-bottom: 1px dashed rgba(92, 58, 33, 0.45);
+  padding-bottom: 2px;
+  background: transparent;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.contact-inline-link:hover {
+  color: var(--caramel);
+  border-color: var(--caramel);
+}
+
+.contact-inline-link.is-copied {
+  color: #2f6b43;
+  border-color: #2f6b43;
+}
+
+.contact-dot-sep {
+  opacity: 0.4;
+}
+
+/* Pil Topik Terbuka */
+.topic-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.topic-label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mut);
+}
+
+.topic-pills {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.topic-pill {
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(92, 58, 33, 0.22);
+  background: rgba(255, 253, 249, 0.65);
+  color: var(--ink);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.topic-pill:hover {
+  border-color: var(--caramel);
+  background: #fffdf9;
+  transform: translateY(-2px);
+}
+
+.topic-pill.active {
+  background: var(--brown);
+  color: #fff;
+  border-color: var(--brown);
+  box-shadow: 0 10px 20px -12px rgba(63, 38, 20, 0.65);
+}
+
+/* Input Tanpa Kotak Card (Open Editorial Underline & Soft Tint) */
+.open-contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.open-f-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.open-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.open-field label {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--brown-dark);
+}
+
+.open-field input,
+.open-field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 0;
+  border-bottom: 1.5px solid rgba(92, 58, 33, 0.28);
+  border-radius: 12px 12px 0 0;
+  background: rgba(255, 253, 249, 0.62);
+  font: 500 14px 'Plus Jakarta Sans', sans-serif;
+  color: var(--ink);
+  transition: background 0.25s ease, border-color 0.25s ease;
+}
+
+.open-field input::placeholder,
+.open-field textarea::placeholder {
+  color: rgba(111, 93, 80, 0.62);
+}
+
+.open-field input:focus,
+.open-field textarea:focus {
+  outline: none;
+  background: rgba(255, 253, 249, 0.95);
+  border-bottom-color: var(--caramel);
+}
+
+/* Garis Sorot Bawah Beranimasi Saat Input Fokus */
+.open-field-bar {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--caramel);
+  transition: width 0.32s cubic-bezier(0.22, 1, 0.36, 1), left 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.open-field input:focus ~ .open-field-bar,
+.open-field textarea:focus ~ .open-field-bar {
+  width: 100%;
+  left: 0;
+}
+
+.open-submit-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.open-submit-row .btn {
+  min-width: min(320px, 100%);
+}
+
+.contact-feedback {
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  background: #eaf5ee;
+  border: 1px solid #c6e3cf;
+  color: #245735;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.contact-feedback[hidden] {
+  display: none;
+}
+
+/* --- 3. RESPONSIF TABLET & HP --- */
+@media (max-width: 920px) {
+  .history-stage {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .hist-open-editorial {
+    text-align: left;
+    max-width: 580px;
+    margin-inline: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .hist-trail-svg {
+    top: 19px;
+    height: 36px;
+  }
+
+  .hist-node-dot {
+    width: 38px;
+    height: 38px;
+    font-size: 14.5px;
+  }
+
+  .hist-node:nth-child(2),
+  .hist-node:nth-child(4) {
+    transform: translateY(10px);
+  }
+
+  .hist-node-label {
+    font-size: 10.5px;
+  }
+
+  .hist-polaroid-main {
+    width: min(255px, 72vw);
+    padding: 9px 9px 32px;
+  }
+
+  .hist-polaroid-mini {
+    width: 94px;
+    right: 4%;
+  }
+
+  .hist-roast-seal {
+    width: 66px;
+    height: 66px;
+    font-size: 8px;
+    left: 4%;
+  }
+
+  .hist-bg-year {
+    top: -16px;
+    font-size: 78px;
+  }
+
+  .open-f-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .open-submit-row .btn {
+    width: 100%;
+  }
+}

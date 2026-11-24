@@ -1,0 +1,197 @@
+.hero-slider {
+  position: relative;
+  height: 100svh;
+  min-height: 580px;
+  max-height: 860px;
+  width: 100%;
+  overflow: hidden;
+  background: #2b1d14;
+}
+
+.slides-track {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.85s ease, visibility 0.85s ease;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.hero-slide.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+.hero-slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.07);
+  transition: transform 6.5s ease-out;
+  z-index: 0;
+}
+
+.hero-slide.active img {
+  transform: scale(1);
+}
+
+.hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(28, 18, 12, 0.64) 0%, rgba(28, 18, 12, 0.22) 34%, rgba(28, 18, 12, 0.68) 100%),
+    radial-gradient(circle at center, rgba(28, 18, 12, 0.45) 0%, rgba(28, 18, 12, 0.14) 75%);
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  max-width: 680px;
+  padding: 72px 20px 24px;
+  color: #fcf9f5;
+}
+
+/* Animasi Masuk Teks per Slide */
+.hero-inner > * {
+  opacity: 0;
+  transform: translate3d(0, 18px, 0);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.hero-slide.active .hero-script {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 0.15s;
+}
+
+.hero-slide.active h1 {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 0.28s;
+}
+
+.hero-slide.active .hero-desc {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 0.4s;
+}
+
+.hero-slide.active .hero-cta-row {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  transition-delay: 0.52s;
+}
+
+.hero-script {
+  display: inline-block;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(22px, 2.8vw, 28px);
+  color: #f3dec6;
+  margin-bottom: 8px;
+}
+
+.hero-inner h1 {
+  font-size: clamp(44px, 6.4vw, 72px);
+  line-height: 1.02;
+  color: #fcf9f5;
+  margin-bottom: 16px;
+  text-shadow: 0 4px 24px rgba(24, 15, 10, 0.35);
+}
+
+.hero-desc {
+  font-size: clamp(14.5px, 1.6vw, 16.5px);
+  color: rgba(252, 249, 245, 0.9);
+  max-width: 50ch;
+  margin: 0 auto 30px;
+}
+
+.hero-cta-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Panah & Dots Slider */
+.slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(252, 249, 245, 0.45);
+  background: rgba(28, 18, 12, 0.32);
+  backdrop-filter: blur(6px);
+  color: #fcf9f5;
+  font-size: 26px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.slider-arrow:hover {
+  background: #fcf9f5;
+  color: var(--brown-dark);
+  border-color: #fcf9f5;
+}
+
+.slider-arrow.prev {
+  left: clamp(14px, 3vw, 36px);
+}
+
+.slider-arrow.next {
+  right: clamp(14px, 3vw, 36px);
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.s-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  border: 1.5px solid #fcf9f5;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.s-dot.active {
+  width: 30px;
+  background: #fcf9f5;
+}
+
+@media (max-width: 680px) {
+  .slider-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 22px;
+  }
+}
