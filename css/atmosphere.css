@@ -657,3 +657,18 @@
     animation: none;
   }
 }
+
+/* --- PENYESUAIAN PROPORSI HERO SLIDER DI LAYAR HP --- */
+@media (max-width: 680px) {
+  .hero-slider {
+    height: 72svh;
+    min-height: 460px;
+    max-height: 560px;
+  }
+
+  .hero-slider img,
+  .hero-slider .slide {
+    object-position: center center;
+    background-position: center center;
+  }
+}
