@@ -658,17 +658,11 @@
   }
 }
 
-/* --- PENYESUAIAN PROPORSI HERO SLIDER DI LAYAR HP --- */
+/* Geser titik fokus foto di HP tanpa memotong tinggi full-screen */
 @media (max-width: 680px) {
-  .hero-slider {
-    height: 72svh;
-    min-height: 460px;
-    max-height: 560px;
-  }
-
   .hero-slider img,
   .hero-slider .slide {
-    object-position: center center;
-    background-position: center center;
+    object-position: 62% center;
+    background-position: 62% center;
   }
 }
