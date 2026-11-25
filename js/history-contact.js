@@ -42,7 +42,7 @@ const CAFE_HISTORY = [
   },
   {
     year: '2026',
-    shortLabel: 'Kala Hari Ini',
+    shortLabel: 'Lokas Hari Ini',
     era: 'Babak 04 • Kemitraan Lokal',
     title: 'Kemitraan Petani Lokal & Pengalaman Digital',
     story: 'Kini kami bermitra langsung dengan petani kopi lereng Jawa Timur untuk menjaga kualitas panen berkelanjutan, sekaligus menghadirkan kemudahan reservasi meja dan katalog menu interaktif bagi setiap tamu.',
@@ -85,7 +85,7 @@ function renderHistorySection() {
   /* Render Kolase Polaroid & Narasi Terbuka (Tanpa Card) */
   stage.innerHTML = `
     <div class="hist-collage">
-      <div class="hist-roast-seal" aria-hidden="true">KALA<br>ROASTERY<br>• ${item.year} •</div>
+      <div class="hist-roast-seal" aria-hidden="true">LOKAS<br>ROASTERY<br>• ${item.year} •</div>
 
       <figure class="hist-polaroid-main">
         <div class="hist-polaroid-img">
@@ -181,7 +181,7 @@ if (contactWaInline) {
 const copyEmailInline = $('#copyEmailInline');
 if (copyEmailInline) {
   copyEmailInline.onclick = async () => {
-    const emailText = 'halo@kalacafe.id';
+    const emailText = 'halo@lokascafe.id';
     try {
       await navigator.clipboard.writeText(emailText);
     } catch {
@@ -194,7 +194,7 @@ if (copyEmailInline) {
     }
 
     const oldText = copyEmailInline.textContent;
-    copyEmailInline.textContent = 'halo@kalacafe.id (Tersalin ✓)';
+    copyEmailInline.textContent = 'halo@lokascafe.id (Tersalin ✓)';
     copyEmailInline.classList.add('is-copied');
     setTimeout(() => {
       copyEmailInline.textContent = oldText;

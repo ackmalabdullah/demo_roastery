@@ -32,7 +32,7 @@ const DEFAULT_REVIEWS = [
   },
 ];
 
-const STORAGE_KEY = 'kala_cafe_reviews_v2';
+const STORAGE_KEY = 'lokas_cafe_reviews_v2';
 let reviewsList = [];
 try {
   const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
