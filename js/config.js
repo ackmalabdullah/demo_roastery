@@ -1,5 +1,5 @@
-const CAFE_WA = '6281234567890';
-const DIKODEAJA_WA = '6281234567890'; // Ganti dengan nomor WhatsApp Dikodeaja milikmu
+const CAFE_WA = '6283854417991';
+const DIKODEAJA_WA = '6283854417991'; // Ganti dengan nomor WhatsApp Dikodeaja milikmu
 const $ = (s) => document.querySelector(s);
 
 const formatRp = (ribu) => `Rp ${ribu}.000`;
